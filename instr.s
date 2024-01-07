@@ -1,10 +1,10 @@
                 processor 6502
-                org 2048
+                org $0800
 
 JOY_FIRE        = 16
 
                 include define.s
-                incbin bofhmus.bin
+                incbin bofhmus.raw
 
                 org start
 

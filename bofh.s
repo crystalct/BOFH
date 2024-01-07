@@ -12,10 +12,10 @@ TITLESCREEN_DELAY = 15
 HSCNAMELENGTH = 12
 
                 processor 6502
-                org 2048
+                org $0800
 
                 include define.s
-                incbin bofhmus.bin
+                incbin bofhmus.raw
 
                 org start
 

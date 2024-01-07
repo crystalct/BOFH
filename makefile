@@ -6,7 +6,7 @@ bofh.d64: bofh.pak instr.pak hiscore.bin
 instr.pak: instr.s bofh.lbm bofhinst.chr
 	benton64 -s2000 -r -b0 bofh.lbm bofh.raw
 	dasm instr.s -oinstr.bin -v3 -p3
-	pucrunch -x6528 instr.bin instr.pak
+	pucrunch -x0x1960 instr.bin instr.pak
 
 bofh.pak: bofh.s define.s screen.s raster.s sprite.s weapon.s actor.s player.s enemy.s control.s math.s bofh.spr sound.s level.s data.s common.spr bofhmus.raw level0.chr level0.blk level0.map floor0.pak floor1.pak floor2.pak floor3.pak floor4.pak floor5.pak state.pak
 	dasm bofh.s -obofh.bin -v3 -p3
@@ -51,4 +51,4 @@ hiscore.bin: hiscore.s
 	dasm hiscore.s -ohiscore.bin -v3 -p3
 
 clean:
-	rm -f *.bin; rm -f *.pak
+	rm -f *.bin; rm -f *.pak; rm -f *.d64
