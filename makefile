@@ -8,7 +8,7 @@ instr.pak: instr.s bofh.lbm bofhinst.chr
 	dasm instr.s -oinstr.bin -v3 -p3
 	pucrunch -x6528 instr.bin instr.pak
 
-bofh.pak: bofh.s define.s screen.s raster.s sprite.s weapon.s actor.s player.s enemy.s control.s math.s bofh.spr sound.s level.s data.s common.spr bofhmus.bin level0.chr level0.blk level0.map floor0.pak floor1.pak floor2.pak floor3.pak floor4.pak floor5.pak state.pak
+bofh.pak: bofh.s define.s screen.s raster.s sprite.s weapon.s actor.s player.s enemy.s control.s math.s bofh.spr sound.s level.s data.s common.spr bofhmus.raw level0.chr level0.blk level0.map floor0.pak floor1.pak floor2.pak floor3.pak floor4.pak floor5.pak state.pak
 	dasm bofh.s -obofh.bin -v3 -p3
 	pucrunch -x0x1960 bofh.bin bofh.pak
 
