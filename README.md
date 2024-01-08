@@ -6,7 +6,7 @@ In both versions, the goal is to defuse all the bombs in the server racks across
 
 The game, in both of its versions, is available on the [Covert Bitops website](https://cadaver.github.io/).
 
-BOFH: Servers Under Siege v1.1
+BOFH: Servers Under Siege v1.1 for Commodore 64
 ------------------------------
 Version 1.1 is a mod that adds the possibility of maneuvering the protagonist using the standard directions of the joystick and with the help of 2nd fire you can reuse the original use of the joystick (forward/backward, turn right/turn left).
 
