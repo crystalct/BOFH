@@ -1300,7 +1300,7 @@ title5:         dc.b " ",0
 title6:         dc.b " ",0
                 dc.b "BOFH HOMEPAGE:",0
                 dc.b " ",0
-                dc.b "HTTP://COVERTBITOPS.CJB.NET",0
+                dc.b "HTTPS://CADAVER.GITHUB.IO",0
                 dc.b " ",0
                 dc.b "AUTHORS' EMAIL:",0
                 dc.b " ",0
