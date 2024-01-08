@@ -29,7 +29,7 @@ Install [GIT](https://git-scm.com/), [MAKE](https://gnuwin32.sourceforge.net/pac
 
 Once all the programs have been installed (place the individual EXE files inside a folder listed in your PATH system variable), decide which folder will contain the sources, with the right mouse button select "Git Bash here" for that folder from the contextual menu and in the DOS/BASH style prompt that appears write: 
 ```
-git clone htps://github.com/CRYSTALCT/BOFH
+git clone https://github.com/crystalct/BOFH
 ```
 and then
 ```
