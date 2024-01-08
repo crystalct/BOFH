@@ -22,15 +22,15 @@ WI_CUT          = 1
 SERVERROOM_DOOR_X = 36
 SERVERROOM_DOOR_Y = 48
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³INITGAME                                                                     ³
-;³                                                                             ³
-;³Game state initialisation.                                                   ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,X,Y                                                              ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?NITGAME                                                                     ?
+;?                                                                            ?
+;?ame state initialisation.                                                   ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y                                                              ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 initgame:       jsr initactors
                 lda #$00
@@ -88,15 +88,15 @@ clearwpn:       sta ammolo,x
                 sta panelupdateflag
                 rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³PROCESSACTORS                                                                ³
-;³                                                                             ³
-;³Game state initialisation (actors).                                          ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,X,Y                                                              ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?ROCESSACTORS                                                                ?
+;?                                                                            ?
+;?ame state initialisation (actors).                                          ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y                                                              ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 processactors:  lda #$00
                 sta computers
@@ -333,15 +333,15 @@ pa_done2:       lda difficulty
                 jmp pa_loopagain
 pa_alldone:     rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³DEFUSE                                                                       ³
-;³                                                                             ³
-;³Bomb defusing stuff.                                                         ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,X,Y                                                              ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?EFUSE                                                                       ?
+;?                                                                            ?
+;?omb defusing stuff.                                                         ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y                                                              ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 defuse:         lda #$ff
                 sta atcloset
@@ -524,15 +524,15 @@ df_detnoexpl:   dec detonate
 df_detnotcomplete:
                 rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³MA_BOFH                                                                      ³
-;³                                                                             ³
-;³Player move routine.                                                         ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,Y                                                                ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?A_BOFH                                                                      ?
+;?                                                                            ?
+;?layer move routine.                                                         ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 ma_bofh:        lda joystick
                 ldy atcloset
@@ -551,26 +551,120 @@ ma_bofhctrlok:  sta actctrl,x
                 sta actweapon
                 jmp ma_human
 
-ma_human:       lda actattk,x
+ma_human:       txa
+				bne png_moveup
+				lda actctrl
+				and #JOY_UP
+				beq mah_notup
+				lda fire2 ;yes JOY_UP
+				beq mah_posspeed ;yes fire2
+				lda actctrl
+				and #JOY_RIGHT
+				beq mah_notupright
+				lda #$1F
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notleft
+
+mah_notupright:	
+				
+				lda actctrl
+				and #JOY_LEFT
+				beq mah_notupleft
+				lda #$DF
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notleft
+
+mah_notupleft:	lda #$FF ;no fire2
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notup
+png_moveup:		lda actattk,x
                 bne mah_skipmove
                 lda actctrl,x
                 and #JOY_UP
                 beq mah_notup
 mah_posspeed:   ldy #0
                 jsr thrustactor
-mah_notup:      lda actctrl,x
+
+mah_notup:      txa
+				bne png_movedown
+				lda actctrl
+				and #JOY_DOWN
+				beq mah_notdown
+				lda fire2 ;yes JOY_DOWN
+				beq mah_negspeed ;yes fire2
+				lda actctrl
+				and #JOY_RIGHT
+				beq mah_notdownright
+				lda #$5F
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notleft
+
+mah_notdownright:
+				lda actctrl
+				and #JOY_LEFT
+				beq mah_notdownleft
+				lda #$9F
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notleft
+				
+mah_notdownleft:
+				lda #$7F ;no fire2
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notdown
+
+png_movedown:	lda actctrl,x
                 and #JOY_DOWN
-                beq mah_notdown
+				beq mah_notdown
+
 mah_negspeed:   ldy #0
                 jsr thrustactor
+
 mah_notdown:
-mah_skipmove:   lda actctrl,x
+mah_skipmove:   txa
+				bne png_moveright
+				lda actctrl
+				and #JOY_RIGHT
+				beq mah_notright
+				lda fire2 ;yes JOY_RIGHT
+				beq mah_posrspeed ;yes fire2
+				lda #$3F ;no fire2
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notright
+png_moveright:	lda actctrl,x
                 and #JOY_RIGHT
-                beq mah_notright
+				beq mah_notright
 mah_posrspeed:  lda #2
                 jsr rthrustactor
-mah_notright:   lda actctrl,x
+mah_notright:   txa ;RIGHT YES
+				bne png_moveleft
+				lda actctrl
+				and #JOY_LEFT
+				beq mah_notleft
+				lda fire2 ;yes JOY_LEFT
+				beq mah_negrspeed ;yes fire2
+				lda #$BF ;no fire2
+				sta actd
+				ldy #24
+                jsr thrustactor
+				jmp mah_notleft
+
+png_moveleft:   lda actctrl,x
                 and #JOY_LEFT
+				;ora fire3
                 beq mah_notleft
 mah_negrspeed:  lda #-2
                 jsr rthrustactor
@@ -744,15 +838,15 @@ mah_crossbow:   lda #$05
                 sta actattk,x
                 rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³ADDSCORE                                                                     ³
-;³                                                                             ³
-;³Adds score to player.                                                        ³
-;³                                                                             ³
-;³Parameters: alo,ahi: score to add                                            ³
-;³Returns: -                                                                   ³
-;³Modifies: A                                                                  ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?DDSCORE                                                                     ?
+;?                                                                            ?
+;?dds score to player.                                                        ?
+;?                                                                            ?
+;?arameters: alo,ahi: score to add                                            ?
+;?eturns: -                                                                   ?
+;?odifies: A                                                                  ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 addscore:       sed
                 lda score
@@ -771,15 +865,15 @@ addscore:       sed
                 sta panelupdateflag
                 rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³CHECKSCROLL                                                                  ³
-;³                                                                             ³
-;³Checks player's position on the screen and scrolls if necessary.             ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,Y                                                                ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?HECKSCROLL                                                                  ?
+;?                                                                            ?
+;?hecks player's position on the screen and scrolls if necessary.             ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 checkscroll:    lda actxl
                 sec
@@ -850,15 +944,15 @@ cs_yok:         asl
                 sta scrollsy
                 rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³UPDATETIME                                                                   ³
-;³                                                                             ³
-;³Decreases bomb countdown.                                                    ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,X,Y                                                              ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?PDATETIME                                                                   ?
+;?                                                                            ?
+;?ecreases bomb countdown.                                                    ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y                                                              ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 updatetime:   lda detonate
               bne updt_alldone
@@ -903,15 +997,15 @@ updt_alldone2:cld
               sta panelupdateflag
               rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³UPDATEPANEL                                                                  ³
-;³                                                                             ³
-;³Updates scorepanel display.                                                  ³
-;³                                                                             ³
-;³Parameters: panelupdateflag - Bitfield of things to update                   ³
-;³Returns: -                                                                   ³
-;³Modifies: A,X,Y                                                              ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?PDATEPANEL                                                                  ?
+;?                                                                            ?
+;?pdates scorepanel display.                                                  ?
+;?                                                                            ?
+;?arameters: panelupdateflag - Bitfield of things to update                   ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y                                                              ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 updatepanel:    lda instrviewtime
                 beq updp_ninstr

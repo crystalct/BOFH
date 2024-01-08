@@ -1230,7 +1230,7 @@ titlep:         dc.b " ",0
                 dc.b " ",0
                 dc.b " ",0,0
 
-title0:         dc.b "BOFH:SERVERS UNDER SIEGE V1.0",0
+title0:         dc.b "BOFH:SERVERS UNDER SIEGE V1.1",0
                 dc.b " ",0
                 dc.b "ORIGINAL DESIGN, CODE, GFX AND MUSIC:",0
                 dc.b "LASSE \\RNI      OLLI NIEMITALO",0
@@ -1239,7 +1239,7 @@ title0:         dc.b "BOFH:SERVERS UNDER SIEGE V1.0",0
                 dc.b "C64 CODE AND GFX: LASSE \\RNI",0
                 dc.b "C64 MUSIC: OLLI NIEMITALO",0
                 dc.b "PUCRUNCH: PASI OJALA",0
-                dc.b " ",0,0
+                dc.b "POTS MOD: CRYSTALCT",0,0
 
                      ;0123456789012345678901234567890123456789
 title1:         dc.b "TAKE THE ROLE OF A BOFH AS YOU ARRIVE",0

@@ -3,8 +3,8 @@ all: bofh.d64
 bofh.d64: bofh.pak instr.pak hiscore.bin
 	makedisk bofh.d64 bofh.seq BOFHC64
 
-instr.pak: instr.s bofh.lbm bofhinst.chr
-	benton64 -s2000 -r -b0 bofh.lbm bofh.raw
+instr.pak: instr.s bofh1.1.lbm bofhinst.chr
+	benton64 -s2000 -r -b0 bofh1.1.lbm bofh.raw
 	dasm instr.s -oinstr.bin -v3 -p3
 	pucrunch -x0x1960 instr.bin instr.pak
 

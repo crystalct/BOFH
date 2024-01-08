@@ -69,15 +69,15 @@ KEY_CBM         = 61
 KEY_Q           = 62
 KEY_RUNSTOP     = 63
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³GETCONTROLS                                                                  ³
-;³                                                                             ³
-;³Reads joystick + scans the keyboard.                                         ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A                                                                  ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?ETCONTROLS                                                                  ?
+;?                                                                            ?
+;?eads joystick + scans the keyboard.                                         ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A                                                                  ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 getcontrols:    lda #$ff
                 sta $dc00
@@ -87,15 +87,46 @@ getcontrols:    lda #$ff
                 eor #$ff
                 sta joystick
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³SCANKEYS                                                                     ³
-;³                                                                             ³
-;³Reads keyboard.                                                              ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,X,Y,temp6                                                        ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+scanpots:       lda #$C0 
+                sta $dc02
+                lda $dc00 ;Control-Port 2 selected (when bit6=0 and bit7=1)
+                and #%00111111 ;clear bit-6/7
+                ora #%10000000 ;set bit-7
+                sta $dc00 ;now control-port 2 is selected for reading the POT registers
+                tya
+                ldy #$10 ;WAIT JUST A BIT
+L06:            nop ;
+                dey ;
+                bpl L06 ;
+                tay
+				lda $d41A ; CHECK 3nd FIRE
+                cmp #$10 ; Less than 16 ($10) ?
+                bcs L03  ; if NO.... then _L03
+				lda #$01
+				bne L04
+L03:            lda #$00
+L04:            sta fire3
+                lda $d419 ; CHECK 3rd FIRE
+                cmp #$10 ; Less than 16 ($10) ?
+                bcs L05  ; if NO.... then _L05
+				lda #$00
+				beq L07
+L05:            lda #$FF
+L07:            sta fire2
+
+				lda #$ff
+                sta $dc02
+                sta $dc00	
+
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?CANKEYS                                                                     ?
+;?                                                                            ?
+;?eads keyboard.                                                              ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y,temp6                                                        ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 scankeys:       lda #$ff
                 sta keytype
@@ -129,18 +160,18 @@ sk_keyfound:    tya
                 sta keypress
 sk_samekey:
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³KEYCONTROL                                                                   ³
-;³                                                                             ³
-;³"Joystick" control with keyboard, with keys Q W E and SHIFT for fire.        ³
-;³                                            A   D                            ³
-;³                                            Z X C                            ³
-;³                                                                             ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: -                                                                   ³
-;³Modifies: A,X,Y,temp6                                                        ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?EYCONTROL                                                                   ?
+;?                                                                            ?
+;?Joystick" control with keyboard, with keys Q W E and SHIFT for fire.        ?
+;?                                           A   D                            ?
+;?                                           Z X C                            ?
+;?                                                                            ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y,temp6                                                        ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 keycontrol:     ldx #$09
 kcloop:         ldy kcrownum,x
@@ -157,15 +188,15 @@ kcpressed:      lda joystick
 sk_nokey:       sta keypress
                 rts
 
-;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-;³GETFIRECLICK                                                                 ³
-;³                                                                             ³
-;³Checks if fire button has been pressed without being held down previously.   ³
-;³                                                                             ³
-;³Parameters: -                                                                ³
-;³Returns: C=1 fire was pressed C=0 wasn't                                     ³
-;³Modifies: A,X,Y                                                              ³
-;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
+;?ETFIRECLICK                                                                 ?
+;?                                                                            ?
+;?hecks if fire button has been pressed without being held down previously.   ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: C=1 fire was pressed C=0 wasn't                                     ?
+;?odifies: A,X,Y                                                              ?
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ?
 
 getfireclick:   jsr getcontrols
                 lda prevjoy

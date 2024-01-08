@@ -62,6 +62,9 @@ lvlactstart     = $64
 lvlactend       = $66
 lvlactcurr      = $68
 
+fire2           = $f7
+fire3       	= $f8
+
 status          = $90
 
 ;旼컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴?
