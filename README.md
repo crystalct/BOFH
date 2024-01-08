@@ -19,3 +19,20 @@ MIT License
 Copyright (c) 1998-2024 Cadaver<br>
 Programming, graphics and sound effects by Cadaver Music by Yehar<br>
 Original PC game by Cadaver, Yehar, Kalle Niemitalo & Tuomas Mäkelä
+
+<br>
+<br>
+**Minimum requirements for compilation on a Windows machine:**
+
+[GIT](https://git-scm.com/), [MAKE](https://gnuwin32.sourceforge.net/packages/make.htm), [DASM](https://dasm-assembler.github.io/) and [makedisk.exe, benton64.exe, pucrunch.exe, prg2bin.ex](https://cadaver.github.io/tools/c64tools.zip) from Covert Bitops ite.
+
+Once all the programs have been installed (place the individual EXE files inside a folder listed in your PATH system variable), decide which folder will contain the sources, with the right mouse button select "Git Bash here" for that folder from the contextual menu and in the DOS/BASH style prompt that appears write: 
+```
+git clone htps://github.com/CRYSTALCT/BOFH
+```
+and then
+```
+cd BOFH
+make
+```
+
