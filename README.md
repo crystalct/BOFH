@@ -9,3 +9,9 @@ The game, in both of its versions, is available on the [Covert Bitops website](h
 BOFH: Servers Under Siege V1.1
 ------------------------------
 Version 1.1 is a mod that adds the possibility of maneuvering the protagonist using the standard directions of the joystick and with the help of 2nd fire you can reuse the original use of the joystick (forward/backward, turn right/turn left).
+
+MIT License
+
+Copyright (c) 1998-2024 Cadaver 
+Programming, graphics and sound effects by Cadaver Music by Yehar
+Original PC game by Cadaver, Yehar, Kalle Niemitalo & Tuomas Mäkelä
