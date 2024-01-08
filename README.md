@@ -22,7 +22,8 @@ Original PC game by Cadaver, Yehar, Kalle Niemitalo & Tuomas Mäkelä
 
 <br>
 <br>
-**Minimum requirements for compilation on a Windows machine:
+
+**Minimum requirements for compilation on a Windows machine:**
 
 [GIT](https://git-scm.com/), [MAKE](https://gnuwin32.sourceforge.net/packages/make.htm), [DASM](https://dasm-assembler.github.io/) and [makedisk.exe, benton64.exe, pucrunch.exe, prg2bin.ex](https://cadaver.github.io/tools/c64tools.zip) from Covert Bitops site.
 
