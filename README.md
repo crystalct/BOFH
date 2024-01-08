@@ -16,8 +16,7 @@ Version 1.1 is a mod that adds the possibility of maneuvering the protagonist us
 <br>
 MIT License
 
-Copyright (c) 1998-2024 Cadaver 
-
+Copyright (c) 1998-2024 Cadaver<br>
 Programming, graphics and sound effects by Cadaver Music by Yehar
 
 Original PC game by Cadaver, Yehar, Kalle Niemitalo & Tuomas Mäkelä
