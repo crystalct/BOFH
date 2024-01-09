@@ -64,6 +64,7 @@ lvlactcurr      = $68
 
 fire2           = $f7
 fire3       	= $f8
+prevfire3		= $6f
 
 status          = $90
 

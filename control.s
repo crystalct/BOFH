@@ -79,7 +79,7 @@ KEY_RUNSTOP     = 63
 ;?odifies: A                                                                  ?
 ;읕컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴?
 
-getcontrols:    lda #$ff
+getcontrols:    lda #$bf
                 sta $dc00
                 lda joystick
                 sta prevjoy
@@ -89,16 +89,18 @@ getcontrols:    lda #$ff
 
 scanpots:       lda #$C0 
                 sta $dc02
-                lda $dc00 ;Control-Port 2 selected (when bit6=0 and bit7=1)
-                and #%00111111 ;clear bit-6/7
-                ora #%10000000 ;set bit-7
-                sta $dc00 ;now control-port 2 is selected for reading the POT registers
+                ;lda $dc00 ;Control-Port 2 selected (when bit6=0 and bit7=1)
+                ;and #%00111111 ;clear bit-6/7
+                ;ora #%10000000 ;set bit-7
+                ;sta $dc00 ;now control-port 2 is selected for reading the POT registers
                 tya
                 ldy #$10 ;WAIT JUST A BIT
 L06:            nop ;
                 dey ;
                 bpl L06 ;
                 tay
+				lda fire3
+				sta prevfire3
 				lda $d41A ; CHECK 3nd FIRE
                 cmp #$10 ; Less than 16 ($10) ?
                 bcs L03  ; if NO.... then _L03
@@ -116,7 +118,7 @@ L07:            sta fire2
 
 				lda #$ff
                 sta $dc02
-                sta $dc00	
+                ;sta $dc00	
 
 ;旼컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴?
 ;?CANKEYS                                                                     ?

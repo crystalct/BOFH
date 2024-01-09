@@ -57,15 +57,15 @@ CROSSBOW_DELAY  = 16
 
 
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁCHANGEWEAPON                                                                 Ё
-;Ё                                                                             Ё
-;ЁWeapon selection routine                                                     Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,X,Y                                                              Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?HANGEWEAPON                                                                 ?
+;?                                                                            ?
+;?eapon selection routine                                                     ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,X,Y                                                              ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 changeweapon:   lda actattk+ACTI_BOFH
                 bne cw_done
@@ -79,7 +79,12 @@ cw_findbest:    lda ammolo,x
                 bne cw_wpnok
                 dex
                 bpl cw_findbest
-cw_notzero:     ldx keytype
+cw_notzero:     lda fire3
+                bne go_fire3
+				beq no_fire3
+go_fire3:		lda prevfire3
+				beq cw_next
+no_fire3:       ldx keytype
                 bpl cw_ok
 cw_done:        rts
 cw_ok:          cpx #KEY_V
@@ -143,15 +148,15 @@ viewinstr_common2:
                 sta instrviewtime
                 bne cw_setupdate
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_ITEM                                                                      Ё
-;Ё                                                                             Ё
-;ЁCollectable item routine.                                                    Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_ITEM                                                                      ?
+;?                                                                            ?
+;?ollectable item routine.                                                    ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_workstation:rts
 
@@ -292,16 +297,16 @@ decammo:        cpx #ACTI_BOFH
                 cld
                 jmp cw_setupdate
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁEXPLODEACTOR                                                                 Ё
-;Ё                                                                             Ё
-;ЁTurns an actor into an explosion and spawns shrapnel.                        Ё
-;Ё                                                                             Ё
-;ЁParameters: X:Actor                                                          Ё
-;Ё            A:Initial damage of shrapnel                                     Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?XPLODEACTOR                                                                 ?
+;?                                                                            ?
+;?urns an actor into an explosion and spawns shrapnel.                        ?
+;?                                                                            ?
+;?arameters: X:Actor                                                          ?
+;?           A:Initial damage of shrapnel                                     ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 explodeactor:   sta ea_shrapneldmg+1
                 lda #NUM_SHRAPNEL
                 sta temp9
@@ -341,15 +346,15 @@ ea_shrapneldone:rts
 
 
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_BLOOD                                                                     Ё
-;Ё                                                                             Ё
-;ЁBlood move routine.                                                          Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_BLOOD                                                                     ?
+;?                                                                            ?
+;?lood move routine.                                                          ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_blood:       jsr moveactor
                 inc actfd,x
@@ -364,15 +369,15 @@ mab_done:       lda #ACT_NONE
                 rts
 
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_SHRAPNEL                                                                  Ё
-;Ё                                                                             Ё
-;ЁShrapnel move routine                                                        Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_SHRAPNEL                                                                  ?
+;?                                                                            ?
+;?hrapnel move routine                                                        ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_shrapnel:    jsr checkpunish
                 jsr moveactor_bounce
@@ -389,15 +394,15 @@ ma_shrapnel:    jsr checkpunish
                 sta actt,x
 mashr_hpok:     rts
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_FLAME                                                                     Ё
-;Ё                                                                             Ё
-;ЁFlame move routine.                                                          Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_FLAME                                                                     ?
+;?                                                                            ?
+;?lame move routine.                                                          ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_flame:       jsr checkpunish ;Collision check here
                 jsr moveprojectile_checkobstacles
@@ -413,15 +418,15 @@ mafl_nohitwall: inc actfd,x
                 bcs mablt_disappear2
                 rts
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_BULLET                                                                    Ё
-;Ё                                                                             Ё
-;ЁBullet move routine.                                                         Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_BULLET                                                                    ?
+;?                                                                            ?
+;?ullet move routine.                                                         ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_bullet:      dec acttime,x
                 beq mablt_disappear
@@ -451,15 +456,15 @@ mablt_hitwall:  lda #ACT_SMOKE
                 sta actf,x
                 rts
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_GRENADE                                                                   Ё
-;Ё                                                                             Ё
-;ЁGrenade move routine.                                                        Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_GRENADE                                                                   ?
+;?                                                                            ?
+;?renade move routine.                                                        ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_grenade:     dec acttime,x
                 bne ma_grnnoexplode
@@ -479,15 +484,15 @@ ma_grnnoexplode:jsr moveactor_bounce
                 lda #$00
 ma_grnok:       sta actf,x
                 rts
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_MELEEHIT                                                                  Ё
-;Ё                                                                             Ё
-;ЁMelee-hit (kind of virtual actor) move routine.                              Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_MELEEHIT                                                                  ?
+;?                                                                            ?
+;?elee-hit (kind of virtual actor) move routine.                              ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_meleehit:    jsr checkpunish
                 dec acttime,x
@@ -501,15 +506,15 @@ mamh_move:      jsr moveprojectile_checkobstacles
                 bcs mablt_hitwall
                 rts
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁMA_SMOKE                                                                     Ё
-;Ё                                                                             Ё
-;ЁSmokecloud move routine.                                                     Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?A_SMOKE                                                                     ?
+;?                                                                            ?
+;?mokecloud move routine.                                                     ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 ma_smoke:       inc actf,x
                 lda actf,x
@@ -526,15 +531,15 @@ ma_explosion:   inc actfd,x
                 beq ma_smoke
                 rts
 
-;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-;ЁSPAWN...                                                                     Ё
-;Ё                                                                             Ё
-;ЁVarious spawn routines for attacks                                           Ё
-;Ё                                                                             Ё
-;ЁParameters: -                                                                Ё
-;ЁReturns: -                                                                   Ё
-;ЁModifies: A,Y                                                                Ё
-;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+;зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
+;?PAWN...                                                                     ?
+;?                                                                            ?
+;?arious spawn routines for attacks                                           ?
+;?                                                                            ?
+;?arameters: -                                                                ?
+;?eturns: -                                                                   ?
+;?odifies: A,Y                                                                ?
+;юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд?
 
 spawnbullet:    jsr getspawnrange
                 jsr getfreeactor
